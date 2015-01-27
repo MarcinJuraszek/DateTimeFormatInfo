@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DateTimeFormat.info &bull; DateTime format strings for .NET</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="content/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="content/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="Scripts/angular.min.js" type="text/javascript"></script>
+    <script src="Scripts/app.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    var appInsights = window.appInsights || function (config) {
+        function s(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, r = document, f = window, e = "script", o = r.createElement(e), i, u; for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) s("track" + i.pop()); return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function (config, r, f, e, o) { var s = u && u(config, r, f, e, o); return s !== !0 && t["_" + i](config, r, f, e, o), s }), t
+    }({
+        instrumentationKey: "54101d2c-1bac-472f-8ce5-e326da90c016"
+    });
+
+    window.appInsights = appInsights;
+    appInsights.trackPageView();
+    </script>
+
+</head>
+
+<body ng-controller="AppCtrl">
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1><code>DateTime</code>format.info</h1>
+            <p class="lead">Because I've searched for <em>&bdquo;<code>DateTime</code> custom format string&ldquo;</em> a milion times</p>
+            <input contenteditable="true" class="form-control" ng-model="format" ng-change="formatChanged()" value="ddd-MM-yyyy hh:mm:ss.fffffff" />
+            <div>
+                <span class="lead" id="formattedString" ng-bind="formattedString">-</span>
+            </div>
+            <div class="alert alert-danger" ng-show="showError">
+                <p><strong>{{exceptionType}}</strong>: {{exceptionMessage}}</p>
+            </div>
+        </div>
+
+        <div class="panel-group" id="legendCustom" role="tablist" aria-multiselectable="false">
+            <h4>Custom Date and Time Format Strings</h4>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#legendCustom" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Date</a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="item in legendItems | filter: isDate"><span>{{item.format}}</span> {{item.description}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#legendCustom" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Time</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="item in legendItems | filter: isTime"><span>{{item.format}}</span> {{item.description}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#legendCustom" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Others</a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="item in legendItems | filter: isOther"><span>{{item.format}}</span> {{item.description}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-group" id="legendStandard" role="tablist" aria-multiselectable="false">
+            <h4>Standard Date and Time Format Strings</h4>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#legendStandard" href="#collapseStandard" aria-expanded="true" aria-controls="collapseStandard">All</a>
+                    </h4>
+                </div>
+                <div id="collapseStandard" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="item in legendItems | filter: isStandard"><span>{{item.format}}</span> {{item.description}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2015 | <a href="http://marcinjuraszek.com">marcinjuraszek.com</a> | source: <a href="https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx">msdn</a></p>
+        </footer>
+
+    </div>
+</body>
+</html>
