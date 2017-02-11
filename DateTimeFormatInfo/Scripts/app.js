@@ -1,5 +1,15 @@
 ﻿var app = angular.module('app', []);
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 app.controller('AppCtrl', function ($scope) {
     $scope.legendItems = [
         { format: 'd', description: 'The day of the month, from 1 through 31.', group: 'date' },
@@ -68,7 +78,9 @@ app.controller('AppCtrl', function ($scope) {
         { format: 'Any other single character', description: 'Unknown specifier.', group: 'standard' },
     ];
 
-    $scope.format = "dddd, MMMM dd, yyyy HH:mm:ss";
+    var formatFromQueryString = getParameterByName("format");
+
+    $scope.format = formatFromQueryString ? formatFromQueryString : "dddd, MMMM dd, yyyy HH:mm:ss";
     $scope.formattedString = "-";
 
     $scope.showError = false;
